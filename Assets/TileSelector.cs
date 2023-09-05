@@ -40,6 +40,7 @@ public class TileSelector : MonoBehaviour
 
     public void Deselect(Tile previousTile)
     {
+        if (tiles.Count <= 1) { return; }
         if (tiles[tiles.Count - 2] == previousTile)
         {
             Tile tile = tiles[tiles.Count - 1];
@@ -52,7 +53,8 @@ public class TileSelector : MonoBehaviour
     public bool Select(Tile tile)
     {
         Tile previousTile = tiles[tiles.Count - 1];
-        if (grid.AreNeighbors(previousTile, tile)) {
+        if (grid.AreNeighbors(previousTile, tile)
+            && SelectionIsValid(tile)) {
             tile.Select();
             tile.TileBorder.Show();
             grid.SetAdjoiningEdgesActive(previousTile, tile, false);
@@ -69,9 +71,18 @@ public class TileSelector : MonoBehaviour
         selecting = false;
         foreach (Tile tile in tiles)
         {
-            tile.Deselect(startR, startG, startB);
+            tile.Deselect(startR, startG, startB); // TODO - add scoring
         }
 
-        tiles[0].EmptyTile();
+        // empty the first tile if other tiles were selected
+        if (tiles.Count > 1)
+        {
+            tiles[0].EmptyTile();
+        }
+    }
+
+    bool SelectionIsValid(Tile tile)
+    {
+        return ((startR && !tile.RActive) || (startG && !tile.GActive) || (startB && !tile.BActive));
     }
 }

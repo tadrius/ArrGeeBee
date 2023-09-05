@@ -41,25 +41,22 @@ public class Player : MonoBehaviour
         if (hit)
         {
             Tile tile = hit.transform.GetComponent<Tile>();
-            if (tile == currentTile) { return; }
-            else 
+            if (!tileSelector.Selecting) // if not selecting
             {
-                if (!tileSelector.Selecting) // if not selecting
-                {
-                    DropCurrentTile(); // remove border and highlights of previous tile
-                    highlighter.HighlightTile(tile);
-                    tile.TileBorder.Show();
-                } 
-                else if (tile.Selected)
-                {
-                    tileSelector.Deselect(tile);
-                }
-                else if (tileSelector.Select(tile)) // if successful selection
-                {
-                    highlighter.HighlightTile(tile);
-                }
-                currentTile = tile;
+                DropCurrentTile(); // remove border and highlights of previous tile
+                highlighter.HighlightTile(tile);
+                tile.TileBorder.Show();
             }
+            else if (tile.Selected)
+            {
+                tileSelector.Deselect(tile);
+            }
+            else if (tileSelector.Select(tile)) // if successful selection
+            {
+                highlighter.HighlightTile(tile);
+            }
+            currentTile = tile;
+
         }
         else if (!tileSelector.Selecting)
         {
