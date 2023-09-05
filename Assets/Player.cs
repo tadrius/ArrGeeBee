@@ -44,30 +44,31 @@ public class Player : MonoBehaviour
             if (tile == currentTile || tile.Selected) { return; }
             else 
             {
-                if (!tileSelector.Selecting) // if pointing over tile while not selecting
+                if (!tileSelector.Selecting) // if not selecting
                 {
-                    EmptyCurrentTile(); // remove border and highlights of previously pointed at tile
-                } else
+                    DropCurrentTile(); // remove border and highlights of previous tile
+                    highlighter.HighlightTile(tile);
+                    tile.TileBorder.Show();
+                } 
+                else if (tileSelector.Select(tile)) // if successful selection
                 {
-                    tileSelector.Select(tile);
+                    highlighter.HighlightTile(tile);
                 }
                 currentTile = tile;
-                highlighter.HighlightTile(currentTile);
-                currentTile.ShowBorder(true);
             }
         }
-        else
+        else if (!tileSelector.Selecting)
         {
-            EmptyCurrentTile();
+            DropCurrentTile();
         }
     }
 
-    void EmptyCurrentTile()
+    void DropCurrentTile()
     {
         if (currentTile != null)
         {
             highlighter.RemoveHighlight(currentTile);
-            currentTile.ShowBorder(false);
+            currentTile.TileBorder.Hide();
             currentTile = null;
         }
     }

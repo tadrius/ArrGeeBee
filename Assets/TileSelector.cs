@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TileSelector : MonoBehaviour
 {
     [SerializeField] bool selecting = false;
 
-    Tile startTile;
     bool startR, startG, startB;
 
     List<Tile> tiles;
@@ -25,21 +25,30 @@ public class TileSelector : MonoBehaviour
 
     public void StartSelection(Tile tile)
     {
-        startTile = tile;
         if (tile == null) { return; }
 
         startR = tile.RActive;
         startG = tile.GActive;
         startB = tile.BActive;
 
-        tiles = new();
+        tile.Select();
+
+        tiles = new() { tile };
+
         selecting = true;
     }
 
-    public void Select(Tile tile)
+    public bool Select(Tile tile)
     {
-        tile.Select();
-        tiles.Add(tile);
+        Tile previousTile = tiles[tiles.Count - 1];
+        if (grid.AreNeighbors(previousTile, tile)) {
+            tile.Select();
+            tile.TileBorder.Show();
+            grid.HideAdjoiningEdges(previousTile, tile);
+            tiles.Add(tile);
+            return true;
+        }
+        return false;
     }
 
     public void EndSelection()
@@ -52,8 +61,6 @@ public class TileSelector : MonoBehaviour
             tile.Deselect(startR, startG, startB);
         }
 
-        startTile.Deselect(startR, startG, startB);
-        startTile.EmptyTile();
-        startTile = null;
+        tiles[0].EmptyTile();
     }
 }

@@ -5,16 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(TileColor))]
 public class Tile : MonoBehaviour
 {
-
-    [SerializeField] Border border;
-
     bool selected = false;
-
-    [SerializeField] bool rActive = false;
-    [SerializeField] bool gActive = false;
-    [SerializeField] bool bActive = false;
+    bool rActive = false;
+    bool gActive = false;
+    bool bActive = false;
 
     TileColor tileColor;
+    TileBorder tileBorder;
     Vector2Int coordinates;
 
     public bool Selected { get { return selected; } }
@@ -22,21 +19,19 @@ public class Tile : MonoBehaviour
     public bool GActive { get { return gActive; } }
     public bool BActive { get { return bActive; } }
 
+    public TileBorder TileBorder { get { return tileBorder; } }
+
     public Vector2Int Coordinates { get { return coordinates; } }
 
     private void Awake()
     {
         tileColor = GetComponent<TileColor>();
+        tileBorder = GetComponent<TileBorder>();
     }
 
     private void Start()
     {
         ResetTile();
-    }
-
-    public void ShowBorder(bool show)
-    {
-        border.gameObject.SetActive(show);
     }
 
     public void Select()
@@ -53,7 +48,7 @@ public class Tile : MonoBehaviour
         bActive = bActive || activateB;
 
         tileColor.RemoveHighlight();
-        ShowBorder(false);
+        TileBorder.Hide();
         tileColor.ApplyRGB(rActive, gActive, bActive);
 
         if (IsComplete())
@@ -61,7 +56,6 @@ public class Tile : MonoBehaviour
             ResetTile();
         }
     }
-
 
     public bool IsComplete()
     {
@@ -88,7 +82,6 @@ public class Tile : MonoBehaviour
                 bActive = false;
             }
         }
-
         tileColor.ApplyRGB(rActive, gActive, bActive);
     }
 
@@ -105,5 +98,4 @@ public class Tile : MonoBehaviour
     {
         this.coordinates = coordinates;
     }
-
 }
