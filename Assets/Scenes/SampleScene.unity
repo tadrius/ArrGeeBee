@@ -167,8 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6a1d066bdd369488d1230d0f14c1ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cols: 10
-  rows: 10
+  cols: 5
+  rows: 5
   scale: 1
   tilePrefab: {fileID: 490966454244119769, guid: 9bd678bc96d733243afd2b175e58c99a, type: 3}
 --- !u!1 &349037720
@@ -273,10 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385a1106820ebeb4298c272681c5c877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultRed: 0.2
-  defaultGreen: 0.2
-  defaultBlue: 0.2
-  highlightMultiplier: 0.8
+  defaultRed: 0.25
+  defaultGreen: 0.25
+  defaultBlue: 0.25
+  highlightMultiplier: 1
 --- !u!114 &349037726
 MonoBehaviour:
   m_ObjectHideFlags: 0
