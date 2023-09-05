@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 349037724}
   - component: {fileID: 349037723}
   - component: {fileID: 349037725}
+  - component: {fileID: 349037726}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -275,7 +276,20 @@ MonoBehaviour:
   red: 1
   green: 0
   blue: 0
-  highlightMultiplier: 0.75
+  highlightMultiplier: 0.5
+--- !u!114 &349037726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349037720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c0cc68010ba764e842d8a3ef660904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selecting: 0
 --- !u!1 &393837454
 GameObject:
   m_ObjectHideFlags: 0

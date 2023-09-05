@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -8,9 +9,15 @@ public class TileColor : MonoBehaviour
 {
 
     SpriteRenderer spriteRenderer;
+
+    [SerializeField] float maxR = .5f;
+    [SerializeField] float maxG = .5f;
+    [SerializeField] float maxB = .5f;
+
     float red = 0f;
     float green = 0f;
     float blue = 0f;
+
     bool highlighted = false;
 
     public bool Highlighted { get { return highlighted; } }
@@ -20,26 +27,11 @@ public class TileColor : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Start()
+    public void ApplyRGB(bool r, bool g, bool b)
     {
-        SetRandomColor();
-    }
-
-    public void SetRandomColor()
-    {
-        red = Random.Range(0, 2); green = Random.Range(0, 2); blue = Random.Range(0, 2);
-        while (IsWhite())
-        {
-            red = Random.Range(0, 2); green = Random.Range(0, 2); blue = Random.Range(0, 2);
-        }
-        spriteRenderer.color = new Color(red, green, blue);
-    }
-
-    public void AddColor(float r, float g, float b)
-    {
-        red = Mathf.Min(red + r, 1f);
-        green = Mathf.Min(green + g, 1f);
-        blue = Mathf.Min(blue + b, 1f);
+        if (r) { red = maxR;    } else { red = 0f; }
+        if (g) { green = maxG;  } else { green = 0f; }
+        if (b) { blue = maxB;   } else { blue = 0f; }
         spriteRenderer.color = new Color(red, green, blue);
     }
 
@@ -55,12 +47,6 @@ public class TileColor : MonoBehaviour
         if (!highlighted) return;
         spriteRenderer.color = new Color(red, green, blue);
         highlighted = false;
-    }
-
-    public bool IsWhite()
-    {
-        if (red >= 1f && green >= 1f &&  blue >= 1f) return true;
-        return false;
     }
 
 }

@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerActions))]
-[RequireComponent(typeof(Colorer))]
+[RequireComponent(typeof(Highlighter))]
+[RequireComponent(typeof(TileSelector))]
 public class Player : MonoBehaviour
 {
 
     Tile currentTile;
+
     PlayerActions actions;
-    Colorer colorer;
+    Highlighter highlighter;
+    TileSelector tileSelector;
 
     private void Awake()
     {
         actions = GetComponent<PlayerActions>();
-        colorer = GetComponent<Colorer>();
+        highlighter = GetComponent<Highlighter>();
+        tileSelector = GetComponent<TileSelector>();
     }
 
     void FixedUpdate()
@@ -39,28 +43,39 @@ public class Player : MonoBehaviour
             Tile tile = hit.transform.GetComponent<Tile>();
             if (tile != null && tile != currentTile)
             {
-                if (currentTile != null)
+                // when selecting
+                if (tileSelector.Selecting)
                 {
-                    colorer.RemoveHighlight(currentTile);
-                    currentTile.ShowBorder(false);
+                    currentTile = tile;
+                    if (currentTile.Selected) { return; }
+                    tileSelector.Select(currentTile);
+                    highlighter.HighlightTile(currentTile);
+                    currentTile.ShowBorder(true);
                 }
-                currentTile = tile;
-                colorer.HighlightTile(currentTile);
-                currentTile.ShowBorder(true);
+                // mouse over
+                else
+                {
+                    if (currentTile != null)
+                    {
+                        highlighter.RemoveHighlight(currentTile);
+                        currentTile.ShowBorder(false);
+                    }
+                    currentTile = tile;
+                    highlighter.HighlightTile(currentTile);
+                    currentTile.ShowBorder(true);
+                }
             }
         }
     }
 
     void Click()
     {
-        if (null == colorer) { return; }
-
-        colorer.ColorTile(currentTile);
-        if (currentTile.IsComplete())
+        if (actions.PointerDown && currentTile != null)
         {
-            // TODO - score
-            // TODO - reset tile
-            currentTile.ResetTile();
+            tileSelector.StartSelection(currentTile);
+        } else
+        {
+            tileSelector.EndSelection();
         }
     }
 }

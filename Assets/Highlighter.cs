@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Colorer : MonoBehaviour
+public class Highlighter : MonoBehaviour
 {
 
     [SerializeField][Range(0f, 1f)] float red = 1f;
@@ -11,11 +11,6 @@ public class Colorer : MonoBehaviour
     [SerializeField][Range(0f, 1f)] float blue = 0f;
 
     [SerializeField][Range(0f, 1f)] float highlightMultiplier = .5f; 
-
-    public void ColorTile(Tile tile)
-    {
-        tile.GetComponent<TileColor>().AddColor(red, green, blue);
-    }
 
     public void HighlightTile(Tile tile)
     {

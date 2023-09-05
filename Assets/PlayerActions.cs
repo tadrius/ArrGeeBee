@@ -8,9 +8,11 @@ public class PlayerActions : MonoBehaviour
 {
     bool pointed;
     bool clicked;
+    bool pointerDown = false;
 
     public bool Pointed { get { return pointed; } set { pointed = value; } }
     public bool Clicked { get { return clicked; } set { clicked = value; } }
+    public bool PointerDown { get { return pointerDown; } }
 
     void OnPoint()
     {
@@ -19,7 +21,10 @@ public class PlayerActions : MonoBehaviour
 
     void OnClick()
     {
-        if (!clicked) { clicked = true; Debug.Log("Click"); } // TODO - handle up, down, and remove log
+        if (!clicked) { 
+            clicked = true; 
+            pointerDown = !pointerDown; 
+        }
     }
 
     public RaycastHit2D RaycastFromPointer()
