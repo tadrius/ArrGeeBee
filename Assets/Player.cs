@@ -42,9 +42,11 @@ public class Player : MonoBehaviour
                 if (currentTile != null)
                 {
                     colorer.RemoveHighlight(currentTile);
+                    currentTile.ShowBorder(false);
                 }
                 currentTile = tile;
                 colorer.HighlightTile(currentTile);
+                currentTile.ShowBorder(true);
             }
         }
     }

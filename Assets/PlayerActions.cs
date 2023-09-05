@@ -19,7 +19,7 @@ public class PlayerActions : MonoBehaviour
 
     void OnClick()
     {
-        if (!clicked) { clicked = true; Debug.Log("Click"); }
+        if (!clicked) { clicked = true; Debug.Log("Click"); } // TODO - handle up, down, and remove log
     }
 
     public RaycastHit2D RaycastFromPointer()
