@@ -273,10 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385a1106820ebeb4298c272681c5c877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  red: 1
-  green: 0
-  blue: 0
-  highlightMultiplier: 0.5
+  defaultRed: 0.2
+  defaultGreen: 0.2
+  defaultBlue: 0.2
+  highlightMultiplier: 0.8
 --- !u!114 &349037726
 MonoBehaviour:
   m_ObjectHideFlags: 0

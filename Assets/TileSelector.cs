@@ -12,6 +12,9 @@ public class TileSelector : MonoBehaviour
     List<Tile> tiles;
     
     public bool Selecting { get { return selecting; } }
+    public bool StartR { get {  return startR; } }
+    public bool StartG { get {  return startG; } }
+    public bool StartB { get {  return startB; } }
 
     public void StartSelection(Tile tile)
     {
@@ -33,11 +36,12 @@ public class TileSelector : MonoBehaviour
     public void EndSelection()
     {
         selecting = false;
-        startTile.Unselect(startR, startG, startB);
+        startTile.Deselect(startR, startG, startB);
+        startTile.EmptyTile();
         startTile = null;
         foreach(Tile tile in tiles)
         {
-            tile.Unselect(startR, startG, startB);
+            tile.Deselect(startR, startG, startB);
         }
     }
 }

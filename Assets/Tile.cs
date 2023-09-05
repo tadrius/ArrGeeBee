@@ -42,7 +42,7 @@ public class Tile : MonoBehaviour
         selected = true;
     }
 
-    public void Unselect(bool activateR, bool activateG, bool activateB)
+    public void Deselect(bool activateR, bool activateG, bool activateB)
     {
         selected = false;
 
@@ -66,7 +66,7 @@ public class Tile : MonoBehaviour
         return rActive && gActive && bActive;
     }
 
-    public void ResetTile()
+    private void ResetTile()
     {
         rActive = 1 == Random.Range(0, 2);
         gActive = 1 == Random.Range(0, 2);
@@ -86,6 +86,15 @@ public class Tile : MonoBehaviour
                 bActive = false;
             }
         }
+
+        tileColor.ApplyRGB(rActive, gActive, bActive);
+    }
+
+    public void EmptyTile()
+    {
+        rActive = false;
+        gActive = false;
+        bActive = false;
 
         tileColor.ApplyRGB(rActive, gActive, bActive);
     }

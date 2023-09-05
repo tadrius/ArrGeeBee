@@ -6,13 +6,34 @@ using UnityEngine;
 public class Highlighter : MonoBehaviour
 {
 
-    [SerializeField][Range(0f, 1f)] float red = 1f;
-    [SerializeField][Range(0f, 1f)] float green = 0f;
-    [SerializeField][Range(0f, 1f)] float blue = 0f;
+    [SerializeField][Range(0f, 1f)] float defaultRed = 1f;
+    [SerializeField][Range(0f, 1f)] float defaultGreen = 1f;
+    [SerializeField][Range(0f, 1f)] float defaultBlue = 1f;
 
-    [SerializeField][Range(0f, 1f)] float highlightMultiplier = .5f; 
+    [SerializeField][Range(0f, 1f)] float highlightMultiplier = .5f;
+
+    TileSelector tileSelector;
+
+    private void Awake()
+    {
+        tileSelector = GetComponent<TileSelector>();
+    }
 
     public void HighlightTile(Tile tile)
+    {
+        if (tileSelector.Selecting)
+        {
+            float red = tileSelector.StartR ? 1f : 0f;
+            float green = tileSelector.StartG ? 1f : 0f;
+            float blue = tileSelector.StartB ? 1f : 0f;
+            HighlightTile(tile, red, green, blue);
+        } else
+        {
+            HighlightTile(tile, defaultRed, defaultGreen, defaultBlue);
+        }
+    }
+
+    public void HighlightTile(Tile tile, float red, float green, float blue)
     {
         tile.GetComponent<TileColor>().Highlight(red * highlightMultiplier, green * highlightMultiplier, blue * highlightMultiplier);
     }

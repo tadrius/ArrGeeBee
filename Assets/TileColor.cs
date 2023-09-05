@@ -38,7 +38,10 @@ public class TileColor : MonoBehaviour
     public void Highlight(float redAmount, float greenAmount, float blueAmount)
     {
         if (highlighted) return;
-        spriteRenderer.color = new Color(red + redAmount, green + greenAmount, blue + blueAmount);
+        spriteRenderer.color = new Color(
+            Mathf.Min(maxR, red + redAmount),
+            Mathf.Min(maxG, green + greenAmount),
+            Mathf.Min(maxB, blue + blueAmount));
         highlighted = true;
     }
 
