@@ -8,11 +8,16 @@ public class PlayerActions : MonoBehaviour
 {
     bool pointed;
     bool clicked;
-    bool pointerDown = false;
+    bool pointerDown;
 
     public bool Pointed { get { return pointed; } set { pointed = value; } }
     public bool Clicked { get { return clicked; } set { clicked = value; } }
     public bool PointerDown { get { return pointerDown; } }
+
+    private void Awake()
+    {
+        pointerDown = false;
+    }
 
     void OnPoint()
     {
