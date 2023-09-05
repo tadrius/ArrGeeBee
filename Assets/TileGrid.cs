@@ -34,31 +34,31 @@ public class TileGrid : MonoBehaviour
         return (xDistance + yDistance) == 1;
     }
 
-    public void HideAdjoiningEdges(Tile tile1, Tile tile2)
+    public void SetAdjoiningEdgesActive(Tile tile1, Tile tile2, bool active)
     {
         int xDifference = tile1.Coordinates.x - tile2.Coordinates.x;
         if (xDifference == -1)
         {
-            tile1.GetComponent<TileBorder>().SetRightEdgeActive(false);
-            tile2.GetComponent<TileBorder>().SetLeftEdgeActive(false);
+            tile1.GetComponent<TileBorder>().SetRightEdgeActive(active);
+            tile2.GetComponent<TileBorder>().SetLeftEdgeActive(active);
         }
         else if (xDifference == 1)
         {
-            tile1.GetComponent<TileBorder>().SetLeftEdgeActive(false);
-            tile2.GetComponent<TileBorder>().SetRightEdgeActive(false);
+            tile1.GetComponent<TileBorder>().SetLeftEdgeActive(active);
+            tile2.GetComponent<TileBorder>().SetRightEdgeActive(active);
         }
         else
         {
             int yDifference = tile1.Coordinates.y - tile2.Coordinates.y;
             if (yDifference == -1)
             {
-                tile1.GetComponent<TileBorder>().SetTopEdgeActive(false);
-                tile2.GetComponent<TileBorder>().SetBottomEdgeActive(false);
+                tile1.GetComponent<TileBorder>().SetTopEdgeActive(active);
+                tile2.GetComponent<TileBorder>().SetBottomEdgeActive(active);
             }
             else if (yDifference == 1)
             {
-                tile1.GetComponent<TileBorder>().SetBottomEdgeActive(false);
-                tile2.GetComponent<TileBorder>().SetTopEdgeActive(false);
+                tile1.GetComponent<TileBorder>().SetBottomEdgeActive(active);
+                tile2.GetComponent<TileBorder>().SetTopEdgeActive(active);
             }
         }
     }

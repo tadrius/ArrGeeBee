@@ -41,20 +41,25 @@ public class Tile : MonoBehaviour
 
     public void Deselect(bool activateR, bool activateG, bool activateB)
     {
-        selected = false;
-
         rActive = rActive || activateR;
         gActive = gActive || activateG;
         bActive = bActive || activateB;
 
-        tileColor.RemoveHighlight();
-        TileBorder.Hide();
-        tileColor.ApplyRGB(rActive, gActive, bActive);
+        Deselect();
 
         if (IsComplete())
         {
             ResetTile();
         }
+    }
+
+    public void Deselect()
+    {
+        selected = false;
+
+        tileColor.RemoveHighlight();
+        TileBorder.Hide();
+        tileColor.ApplyRGB(rActive, gActive, bActive);
     }
 
     public bool IsComplete()

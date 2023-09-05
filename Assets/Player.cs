@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
         if (hit)
         {
             Tile tile = hit.transform.GetComponent<Tile>();
-            if (tile == currentTile || tile.Selected) { return; }
+            if (tile == currentTile) { return; }
             else 
             {
                 if (!tileSelector.Selecting) // if not selecting
@@ -50,6 +50,10 @@ public class Player : MonoBehaviour
                     highlighter.HighlightTile(tile);
                     tile.TileBorder.Show();
                 } 
+                else if (tile.Selected)
+                {
+                    tileSelector.Deselect(tile);
+                }
                 else if (tileSelector.Select(tile)) // if successful selection
                 {
                     highlighter.HighlightTile(tile);

@@ -38,13 +38,24 @@ public class TileSelector : MonoBehaviour
         selecting = true;
     }
 
+    public void Deselect(Tile previousTile)
+    {
+        if (tiles[tiles.Count - 2] == previousTile)
+        {
+            Tile tile = tiles[tiles.Count - 1];
+            grid.SetAdjoiningEdgesActive(previousTile, tile, true);
+            tile.Deselect();
+            tiles.Remove(tile);
+        }
+    }
+
     public bool Select(Tile tile)
     {
         Tile previousTile = tiles[tiles.Count - 1];
         if (grid.AreNeighbors(previousTile, tile)) {
             tile.Select();
             tile.TileBorder.Show();
-            grid.HideAdjoiningEdges(previousTile, tile);
+            grid.SetAdjoiningEdgesActive(previousTile, tile, false);
             tiles.Add(tile);
             return true;
         }
