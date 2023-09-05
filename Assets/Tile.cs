@@ -6,7 +6,7 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
 
-    [SerializeField] GameObject border;
+    [SerializeField] Border border;
 
     bool selected = false;
 
@@ -15,12 +15,14 @@ public class Tile : MonoBehaviour
     [SerializeField] bool bActive = false;
 
     TileColor tileColor;
+    Vector2Int coordinates;
 
     public bool Selected { get { return selected; } }
     public bool RActive { get { return rActive; } }
     public bool GActive { get { return gActive; } }
     public bool BActive { get { return bActive; } }
 
+    public Vector2Int Coordinates { get { return coordinates; } }
 
     private void Awake()
     {
@@ -34,7 +36,7 @@ public class Tile : MonoBehaviour
 
     public void ShowBorder(bool show)
     {
-        border.SetActive(show);
+        border.gameObject.SetActive(show);
     }
 
     public void Select()
@@ -97,6 +99,11 @@ public class Tile : MonoBehaviour
         bActive = false;
 
         tileColor.ApplyRGB(rActive, gActive, bActive);
+    }
+
+    public void SetCoordinates(Vector2Int coordinates)
+    {
+        this.coordinates = coordinates;
     }
 
 }

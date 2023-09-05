@@ -10,15 +10,24 @@ public class TileSelector : MonoBehaviour
     bool startR, startG, startB;
 
     List<Tile> tiles;
-    
+
+    TileGrid grid;
+
     public bool Selecting { get { return selecting; } }
     public bool StartR { get {  return startR; } }
     public bool StartG { get {  return startG; } }
     public bool StartB { get {  return startB; } }
 
+    private void Awake()
+    {
+        grid = FindObjectOfType<TileGrid>();
+    }
+
     public void StartSelection(Tile tile)
     {
         startTile = tile;
+        if (tile == null) { return; }
+
         startR = tile.RActive;
         startG = tile.GActive;
         startB = tile.BActive;
@@ -35,13 +44,16 @@ public class TileSelector : MonoBehaviour
 
     public void EndSelection()
     {
+        if (!selecting) { return; }
+
         selecting = false;
-        startTile.Deselect(startR, startG, startB);
-        startTile.EmptyTile();
-        startTile = null;
-        foreach(Tile tile in tiles)
+        foreach (Tile tile in tiles)
         {
             tile.Deselect(startR, startG, startB);
         }
+
+        startTile.Deselect(startR, startG, startB);
+        startTile.EmptyTile();
+        startTile = null;
     }
 }
