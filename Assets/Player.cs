@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
 
     void Click()
     {
+        if (null == colorer) { return; }
+
         colorer.ColorTile(currentTile);
         if (currentTile.IsComplete())
         {
