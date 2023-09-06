@@ -22,10 +22,11 @@ public class TileGrid : MonoBehaviour
             for (int y = 0; y < rows; y++)
             {
                 Vector3 position = new (x, y, 0);
-                Tile tile = Instantiate(tilePrefab, position * scale, Quaternion.identity, transform);
+                Tile tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
                 tile.SetCoordinates(new Vector2Int(x, y));
             }
         }
+        transform.localScale *= scale;
     }
     public bool AreNeighbors(Tile tile1, Tile tile2)
     {
