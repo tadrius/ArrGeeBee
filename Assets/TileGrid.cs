@@ -11,9 +11,12 @@ public class TileGrid : MonoBehaviour
 
     [SerializeField] Tile tilePrefab;
 
+    List<Tile> tiles = new List<Tile>();
+
     public int Cols { get { return cols; } }
     public int Rows { get { return rows; } }
     public float Scale { get { return scale; } }
+    public List<Tile> Tiles { get {  return tiles; } }
 
     public void CreateGrid()
     {
@@ -24,6 +27,7 @@ public class TileGrid : MonoBehaviour
                 Vector3 position = new (x, y, 0);
                 Tile tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
                 tile.SetCoordinates(new Vector2Int(x, y));
+                tiles.Add(tile);
             }
         }
         transform.localScale *= scale;

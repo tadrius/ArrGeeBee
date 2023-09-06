@@ -23,9 +23,9 @@ public class Highlighter : MonoBehaviour
     {
         if (tileSelector.Selecting)
         {
-            float red = tileSelector.StartR ? 1f : 0f;
-            float green = tileSelector.StartG ? 1f : 0f;
-            float blue = tileSelector.StartB ? 1f : 0f;
+            float red = tileSelector.FillR ? 1f : 0f;
+            float green = tileSelector.FillG ? 1f : 0f;
+            float blue = tileSelector.FillB ? 1f : 0f;
             HighlightTile(tile, red, green, blue);
         } else
         {

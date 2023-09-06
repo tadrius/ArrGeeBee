@@ -7,35 +7,46 @@ public class TileSelector : MonoBehaviour
 {
     [SerializeField] bool selecting = false;
 
-    bool startR, startG, startB;
+    bool fillR, fillG, fillB;
 
     List<Tile> tiles;
 
     TileGrid grid;
+    Scoreboard scoreboard;
 
     public bool Selecting { get { return selecting; } }
-    public bool StartR { get {  return startR; } }
-    public bool StartG { get {  return startG; } }
-    public bool StartB { get {  return startB; } }
+    public bool FillR { get {  return fillR; } }
+    public bool FillG { get {  return fillG; } }
+    public bool FillB { get {  return fillB; } }
 
     private void Awake()
     {
         grid = FindObjectOfType<TileGrid>();
+        scoreboard = FindObjectOfType<Scoreboard>();
     }
 
     public void StartSelection(Tile tile)
     {
         if (tile == null) { return; }
 
-        startR = tile.RActive;
-        startG = tile.GActive;
-        startB = tile.BActive;
+        fillR = tile.RActive;
+        fillG = tile.GActive;
+        fillB = tile.BActive;
 
         tile.Select();
 
         tiles = new() { tile };
 
         selecting = true;
+        CalculateTileValues();
+    }
+
+    void CalculateTileValues()
+    {
+        foreach (Tile tile in grid.Tiles)
+        {
+            tile.GetComponent<TileValue>().CalculateValue(fillR, fillG, fillB, tiles.Count);
+        }
     }
 
     public void Deselect(Tile previousTile)
@@ -47,6 +58,9 @@ public class TileSelector : MonoBehaviour
             grid.SetAdjoiningEdgesActive(previousTile, tile, true);
             tile.Deselect();
             tiles.Remove(tile);
+
+            scoreboard.AddBufferedPoints(-tile.GetComponent<TileValue>().Value);
+            CalculateTileValues();
         }
     }
 
@@ -59,6 +73,9 @@ public class TileSelector : MonoBehaviour
             tile.TileBorder.Show();
             grid.SetAdjoiningEdgesActive(previousTile, tile, false);
             tiles.Add(tile);
+
+            scoreboard.AddBufferedPoints(tile.GetComponent<TileValue>().Value);
+            CalculateTileValues();
             return true;
         }
         return false;
@@ -71,7 +88,7 @@ public class TileSelector : MonoBehaviour
         selecting = false;
         foreach (Tile tile in tiles)
         {
-            tile.Deselect(startR, startG, startB); // TODO - add scoring
+            tile.Deselect(fillR, fillG, fillB); // TODO - add scoring
         }
 
         // empty the first tile if other tiles were selected
@@ -79,10 +96,17 @@ public class TileSelector : MonoBehaviour
         {
             tiles[0].EmptyTile();
         }
+
+        fillR = false;
+        fillG = false;
+        fillB = false;
+
+        scoreboard.IncreaseScore();
+        CalculateTileValues();
     }
 
     bool SelectionIsValid(Tile tile)
     {
-        return ((startR && !tile.RActive) || (startG && !tile.GActive) || (startB && !tile.BActive));
+        return ((fillR && !tile.RActive) || (fillG && !tile.GActive) || (fillB && !tile.BActive));
     }
 }

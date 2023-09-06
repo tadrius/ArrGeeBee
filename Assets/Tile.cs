@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(TileColor))]
 public class Tile : MonoBehaviour
 {
     bool selected = false;
@@ -12,6 +11,7 @@ public class Tile : MonoBehaviour
 
     TileColor tileColor;
     TileBorder tileBorder;
+    TileValue tileValue;
     Vector2Int coordinates;
 
     public bool Selected { get { return selected; } }
@@ -27,6 +27,7 @@ public class Tile : MonoBehaviour
     {
         tileColor = GetComponent<TileColor>();
         tileBorder = GetComponent<TileBorder>();
+        tileValue = GetComponent<TileValue>();
     }
 
     private void Start()
@@ -37,6 +38,7 @@ public class Tile : MonoBehaviour
     public void Select()
     {
         selected = true;
+        tileValue.ValueLocked = true;
     }
 
     public void Deselect(bool activateR, bool activateG, bool activateB)
@@ -56,6 +58,7 @@ public class Tile : MonoBehaviour
     public void Deselect()
     {
         selected = false;
+        tileValue.ValueLocked = false;
 
         tileColor.RemoveHighlight();
         TileBorder.Hide();
