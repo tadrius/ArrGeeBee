@@ -284,9 +284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6a1d066bdd369488d1230d0f14c1ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cols: 6
-  rows: 6
-  scale: 1.15
+  cols: 5
+  rows: 5
+  scale: 1.2
   tilePrefab: {fileID: 490966454244119769, guid: 9bd678bc96d733243afd2b175e58c99a, type: 3}
 --- !u!1 &349037720
 GameObject:
@@ -607,7 +607,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.16470589, g: 0.22745098, b: 0.34117648, a: 0}
+  m_BackGroundColor: {r: 0.068841234, g: 0.10138742, b: 0.16037738, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
